@@ -68,19 +68,22 @@ router.get("/commSupplyForm", function (req, res) {
 
 app.use('/', router);
 
+// Obtaining form info and displaying results.
+
 app.post("/api/homeless", function (req, res) {
   console.log("POST", req.body);
   var sql = "INSERT INTO homeless";
-  sql += " (fullName, email, phoneNumber, maillingAddress, catagory, explination, quantity)";
+  sql += " (fullName, email, phoneNumber, mailingAddress, category, explanation, quantity)";
   sql += " VALUES ";
   sql += " (?,?,?,?,?,?,?);";
+  console.log(sql);
   connection.query(sql, [
     req.body.fullName,
     req.body.email,
-    req.body.phoneNumber,
-    req.body.maillingAddress,
-    req.body.catagory,
-    req.body.explination,
+    req.body.phone,
+    req.body.address,
+    req.body.category,
+    req.body.description,
     req.body.quantity
   ], function (err, sqlResult) {
     if (err) {
@@ -88,85 +91,129 @@ app.post("/api/homeless", function (req, res) {
       throw err;
     };
     console.log(sqlResult);
-    res.json(sqlResult);
+    // fetch matching agencies from database
+    var sql = "SELECT * FROM agency_supply WHERE category = '" + req.body.category + "';"
+    console.log(sql);
+    // var sql = "SELECT * FROM agency_supply where agency_supply.category = " + req.body.category + ";"
+    connection.query(sql, function (err, sqlResult) {
+      if (err) {
+        console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
+        throw err;
+      };
+      res.json(sqlResult);
+    });
 
   });
 });
 app.post("/api/agency_supply", function (req, res) {
   console.log("POST", req.body);
   var sql = "INSERT INTO agency_supply";
-  sql += " (fullName, email, phoneNumber, maillingAddress, catagory, explination, quantity)";
+  sql += " (fullName, email, phoneNumber, mailingAddress, category, explanation, quantity)";
   sql += " VALUES ";
   sql += " (?,?,?,?,?,?,?);";
   connection.query(sql, [
     req.body.fullName,
     req.body.email,
-    req.body.phoneNumber,
-    req.body.maillingAddress,
-    req.body.catagory,
-    req.body.explination,
+    req.body.phone,
+    req.body.address,
+    req.body.category,
+    req.body.description,
     req.body.quantity
   ], function (err, sqlResult) {
     if (err) {
       console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
       throw err;
     };
-    res.json(sqlResult);
     console.log(sqlResult);
+    // fetch matching agencies from database
+    var sql = "SELECT * FROM homeless WHERE category = '" + req.body.category + "';"
+    console.log(sql);
+    // var sql = "SELECT * FROM agency_supply where agency_supply.category = " + req.body.category + ";"
+    connection.query(sql, function (err, sqlResult) {
+      if (err) {
+        console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
+        throw err;
+      };
+      res.json(sqlResult);
+    });
+
   });
 });
+
 app.post("/api/agency_need", function (req, res) {
   console.log("POST", req.body);
   var sql = "INSERT INTO agency_need";
-  sql += " (fullName, email, phoneNumber, maillingAddress, catagory, explination, quantity)";
+  sql += " (fullName, email, phoneNumber, mailingAddress, category, explanation, quantity)";
   sql += " VALUES ";
   sql += " (?,?,?,?,?,?,?);";
   connection.query(sql, [
     req.body.fullName,
     req.body.email,
-    req.body.phoneNumber,
-    req.body.maillingAddress,
-    req.body.catagory,
-    req.body.explination,
+    req.body.phone,
+    req.body.address,
+    req.body.category,
+    req.body.description,
     req.body.quantity
   ], function (err, sqlResult) {
     if (err) {
       console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
       throw err;
     };
-    res.json(sqlResult);
     console.log(sqlResult);
+    // fetch matching volunteer info from database
+    var sql = "SELECT * FROM volunteer WHERE category = '" + req.body.category + "';"
+    console.log(sql);
+    // var sql = "SELECT * FROM agency_supply where agency_supply.category = " + req.body.category + ";"
+    connection.query(sql, function (err, sqlResult) {
+      if (err) {
+        console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
+        throw err;
+      };
+      res.json(sqlResult);
+    });
+
   });
 });
 
 app.post("/api/volunteer", function (req, res) {
   console.log("POST", req.body);
   var sql = "INSERT INTO volunteer";
-  sql += " (fullName, email, phoneNumber, maillingAddress, catagory, explination, quantity)";
+  sql += " (fullName, email, phoneNumber, mailingAddress, category, explanation, quantity)";
   sql += " VALUES ";
   sql += " (?,?,?,?,?,?,?);";
   connection.query(sql, [
     req.body.fullName,
     req.body.email,
-    req.body.phoneNumber,
-    req.body.maillingAddress,
-    req.body.catagory,
-    req.body.explination,
+    req.body.phone,
+    req.body.address,
+    req.body.category,
+    req.body.description,
     req.body.quantity
   ], function (err, sqlResult) {
     if (err) {
       console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
       throw err;
     };
-    res.json(sqlResult);
     console.log(sqlResult);
+    // fetch matching agencies in need from database
+    var sql = "SELECT * FROM agency_need WHERE category = '" + req.body.category + "';"
+    console.log(sql);
+    // var sql = "SELECT * FROM agency_supply where agency_supply.category = " + req.body.category + ";"
+    connection.query(sql, function (err, sqlResult) {
+      if (err) {
+        console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
+        throw err;
+      };
+      res.json(sqlResult);
+    });
+
   });
 });
 
 ///////////////////////////PART TWO/////////////////////////
 
 app.get("/api/homelessSupply", function (req, res) {
-  var sql = "SELECT * FROM agency_supply join homeless where homeless.catagory = agency_supply.catagory;"
+  var sql = "SELECT * FROM agency_supply join homeless where homeless.category = agency_supply.category;"
   connection.query(sql, function (err, sqlResult) {
     if (err) {
       console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
@@ -178,7 +225,7 @@ app.get("/api/homelessSupply", function (req, res) {
 });
 
 app.get("/api/agencyResponseToSupply", function (req, res) {
-  var sql = "SELECT * FROM homeless join agency_supply where homeless.catagory = agency_supply.catagory;"
+  var sql = "SELECT * FROM homeless join agency_supply where homeless.category = agency_supply.category;"
   connection.query(sql, function (err, sqlResult) {
     if (err) {
       console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
@@ -189,7 +236,7 @@ app.get("/api/agencyResponseToSupply", function (req, res) {
 });
 
 app.get("/api/agencyResponseToRequest", function (req, res) {
-  var sql = "SELECT * FROM volunteer join agency_need where volunteer.catagory = agency_need.catagory;"
+  var sql = "SELECT * FROM volunteer join agency_need where volunteer.category = agency_need.category;"
   connection.query(sql, function (err, sqlResult) {
     if (err) {
       console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
@@ -200,7 +247,7 @@ app.get("/api/agencyResponseToRequest", function (req, res) {
 });
 
 app.get("/api/volunteerResponseToSupply", function (req, res) {
-  var sql = "SELECT * FROM agency_need join volunteer where volunteer.catagory = agency_need.catagory;"
+  var sql = "SELECT * FROM agency_need join volunteer where volunteer.category = agency_need.category;"
   connection.query(sql, function (err, sqlResult) {
     if (err) {
       console.log("OH DEAR GOD SO MUCH IS GONE BAD!! WHY IS THERE SO MUCH BLOOD??");
