@@ -6,9 +6,9 @@ CREATE TABLE homeless(
     fullName varchar(255) NOT NULL, 
     email varchar(255), 
     phoneNumber varchar(255), 
-    maillingAddress varchar (255), 
-    catagory varchar(255), 
-    explination varchar(255), 
+    mailingAddress varchar (255), 
+    category varchar(255), 
+    explanation varchar(255), 
     quantity int,
     PRIMARY KEY (id)
 );
@@ -18,9 +18,9 @@ CREATE TABLE agency_need(
     fullName varchar(255) NOT NULL, 
     email varchar(255), 
     phoneNumber varchar(255), 
-    maillingAddress varchar (255), 
-    catagory varchar(255), 
-    explination varchar(255), 
+    mailingAddress varchar (255), 
+    category varchar(255), 
+    explanation varchar(255), 
     quantity int,
     PRIMARY KEY (id)
 );
@@ -30,9 +30,9 @@ CREATE TABLE agency_supply(
     fullName varchar(255) NOT NULL, 
     email varchar(255), 
     phoneNumber varchar(255), 
-    maillingAddress varchar (255), 
-    catagory varchar(255), 
-    explination varchar(255), 
+    mailingAddress varchar (255), 
+    category varchar(255), 
+    explanation varchar(255), 
     quantity int,
     PRIMARY KEY (id)
 );
@@ -42,9 +42,9 @@ CREATE TABLE volunteer(
     fullName varchar(255) NOT NULL, 
     email varchar(255), 
     phoneNumber varchar(255), 
-    maillingAddress varchar (255), 
-    catagory varchar(255), 
-    explination varchar(255), 
+    mailingAddress varchar (255), 
+    category varchar(255), 
+    explanation varchar(255), 
     quantity int,
     PRIMARY KEY (id)
 );
