@@ -42,9 +42,16 @@ body {
 }
 
 /* Landing Page */
+
+#about {
+  padding: 20px;
+
+}
+
 .home-inner {
   background-image: url(../img/homeless.jpg);
 }
+
 
 .caption {
   width: 100%;
@@ -141,6 +148,8 @@ h3.heading {
   font-size: 1.1rem;
 }
 
+
+
 /* Spotlight Section */
 
 .fixed {
@@ -214,6 +223,15 @@ hr.socket {
   border-top: .2rem solid #666b71;
   margin-top: 3rem;
 }
+
+#display {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+/* Results  */
+
+
 
 
 /* #home-heading {
